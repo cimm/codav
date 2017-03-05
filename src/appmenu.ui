@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <menu id="appmenu">
+    <section>
+      <item>
+        <!-- Think this is acctualy window specific, not app specific -->
+        <attribute name="label" translatable="true">Open</attribute>
+        <attribute name="action">win.open</attribute>
+        <attribute name="accel">&lt;Primary&gt;o</attribute>
+      </item>
+    </section>
+    <section>
+      <item>
+        <attribute name="label" translatable="true">Quit</attribute>
+        <attribute name="action">app.quit</attribute>
+        <attribute name="accel">&lt;Primary&gt;q</attribute>
+      </item>
+    </section>
+  </menu>
+</interface>
