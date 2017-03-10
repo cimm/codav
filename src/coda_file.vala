@@ -28,19 +28,9 @@ public class CodaFile {
     unowned Xml.XPath.NodeSet nodes = res->nodesetval;
     for (int i = 0; i < nodes.length (); i++) {
       unowned Xml.Node node = nodes.item (i);
-      var name = get_contents_of_node (node, "/c:Cdtr/c:Nm"); 
-      var bic = get_contents_of_node (node, "/c:CdtrAgt/c:FinInstnId/c:BIC"); 
-      var iban = get_contents_of_node (node, "/c:CdtrAcct/c:Id/c:IBAN"); 
-      transactions += new Transaction (name, bic, iban);
+      transactions += new Transaction.from_xml (node);
     }
     return transactions;
-  }
-
-  private string get_contents_of_node(Xml.Node node, string xpath) {
-    ctx = new XPath.Context (node);
-    ctx.register_ns ("c", NSPACE);
-    XPath.Object* result = ctx.eval_expression (xpath); 
-    return result->nodesetval->item (0)->get_content ();
   }
 
   ~CodaFile () {
