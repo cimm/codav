@@ -22,7 +22,7 @@ class MyApplication : Gtk.Application {
 
     var builder = new Gtk.Builder ();
     try {
-      builder.add_from_file ("src/appmenu.ui");
+      builder.add_from_file ("data/appmenu.ui");
     } catch (Error e) {
       error ("Unable to load file: %s", e.message);
     }

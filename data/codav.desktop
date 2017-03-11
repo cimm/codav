@@ -1,0 +1,11 @@
+[Desktop Entry]
+Name=CODAv
+GenericName=CODA Viewer
+Comment=Reads CODA SEPA payment XML files
+Categories=Office;Utility;
+Exec=codav
+Icon=application-default-icon
+Terminal=false
+Type=Application
+X-GNOME-Gettext-Domain=codav
+Keywords=CODA;SEPA;Finance;
