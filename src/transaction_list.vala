@@ -1,39 +1,33 @@
-// modules: libxml-2.0 transaction
+// modules: libxml-2.0 Transaction
 
 using Xml;
 
 public class TransactionList {
-  Doc* doc = null;
-  XPath.Context ctx = null;
-
   const string NSPACE = "urn:iso:std:iso:20022:tech:xsd:pain.001.001.03"; 
-  //const string MSG_ID_XPATH = "/c:Document/c:CstmrCdtTrfInitn/c:GrpHdr/c:MsgId";
-  const string CDT_TRF_TX_INFO_XPATH = "/c:Document/c:CstmrCdtTrfInitn/c:PmtInf/c:CdtTrfTxInf";
+  Doc* _doc = null;
 
   public TransactionList (string filename) {
-    doc = Parser.parse_file (filename);
-    ctx = new XPath.Context (doc);
-    ctx.register_ns ("c", NSPACE);
+    _doc = Parser.parse_file (filename);
   }
-
-  //public string get_message_id () {
-  //  XPath.Object* res = ctx.eval_expression (MSG_ID_XPATH);
-  //  Xml.Node* node = res->nodesetval->item (0);
-  //  return node->get_content ();
-  //}
 
   public Transaction[] load () {
     Transaction[] transactions = {};
-    XPath.Object* res = ctx.eval_expression (CDT_TRF_TX_INFO_XPATH);
-    unowned Xml.XPath.NodeSet nodes = res->nodesetval;
-    for (int i = 0; i < nodes.length (); i++) {
-      unowned Xml.Node node = nodes.item (i);
+    var results = search ("/c:Document/c:CstmrCdtTrfInitn/c:PmtInf/c:CdtTrfTxInf");
+    for (int i = 0; i < results->length (); i++) {
+      var node = results->item (i);
       transactions += new Transaction.from_xml_node (node);
     }
     return transactions;
   }
 
+  private XPath.NodeSet* search (string xpath) {
+    var context = new XPath.Context (_doc);
+    context.register_ns ("c", NSPACE);
+    var result = context.eval_expression (xpath);
+    return result->nodesetval;
+  }
+
   ~TransactionList () {
-    delete doc;
+    delete _doc;
   }
 }
