@@ -3,8 +3,8 @@
 using Xml;
 
 public class TransactionList {
-  const string NSPACE = "urn:iso:std:iso:20022:tech:xsd:pain.001.001.03"; 
-  Doc* _doc = null;
+  private const string NSPACE = "urn:iso:std:iso:20022:tech:xsd:pain.001.001.03"; 
+  private Doc* _doc = null;
 
   public TransactionList (string filename) {
     _doc = Parser.parse_file (filename);

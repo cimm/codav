@@ -3,15 +3,15 @@
 using Xml;
 
 public class Transaction {
-  const string NSPACE = "urn:iso:std:iso:20022:tech:xsd:pain.001.001.03";
-  Xml.Doc* _node;
-  string _name;
-  string _currency;
-  string _amount;
-  string _bic;
-  string _iban;
-  string _unstructured;
-  string _end_to_end;
+  private const string NSPACE = "urn:iso:std:iso:20022:tech:xsd:pain.001.001.03";
+  private Xml.Doc* _node;
+  private string _name;
+  private string _currency;
+  private string _amount;
+  private string _bic;
+  private string _iban;
+  private string _unstructured;
+  private string _end_to_end;
 
   public Transaction.from_xml_node (Xml.Node node) {
     _node = node;
