@@ -1,4 +1,4 @@
-// modules: gtk+-3.0 CodaFile
+// modules: gtk+-3.0 TransactionList
 
 public class MyWindow : Gtk.ApplicationWindow {
   enum Column {
@@ -48,8 +48,8 @@ public class MyWindow : Gtk.ApplicationWindow {
   }
 
   private void open_file (string filename) {
-    CodaFile coda_file = new CodaFile(filename);
-    var transactions = coda_file.get_transactions ();
+    TransactionList list = new TransactionList(filename);
+    var transactions = list.load ();
 
     Gtk.TreeIter iter;
     for (int i = 0; i < transactions.length; i++) {

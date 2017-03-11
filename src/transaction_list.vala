@@ -2,7 +2,7 @@
 
 using Xml;
 
-public class CodaFile {
+public class TransactionList {
   Doc* doc = null;
   XPath.Context ctx = null;
 
@@ -10,7 +10,7 @@ public class CodaFile {
   //const string MSG_ID_XPATH = "/c:Document/c:CstmrCdtTrfInitn/c:GrpHdr/c:MsgId";
   const string CDT_TRF_TX_INFO_XPATH = "/c:Document/c:CstmrCdtTrfInitn/c:PmtInf/c:CdtTrfTxInf";
 
-  public CodaFile (string filename) {
+  public TransactionList (string filename) {
     doc = Parser.parse_file (filename);
     ctx = new XPath.Context (doc);
     ctx.register_ns ("c", NSPACE);
@@ -22,18 +22,18 @@ public class CodaFile {
   //  return node->get_content ();
   //}
 
-  public Transaction[] get_transactions () {
+  public Transaction[] load () {
     Transaction[] transactions = {};
     XPath.Object* res = ctx.eval_expression (CDT_TRF_TX_INFO_XPATH);
     unowned Xml.XPath.NodeSet nodes = res->nodesetval;
     for (int i = 0; i < nodes.length (); i++) {
       unowned Xml.Node node = nodes.item (i);
-      transactions += new Transaction.from_xml (node);
+      transactions += new Transaction.from_xml_node (node);
     }
     return transactions;
   }
 
-  ~CodaFile () {
+  ~TransactionList () {
     delete doc;
   }
 }
