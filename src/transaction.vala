@@ -32,12 +32,12 @@ public class Transaction {
   public string iban {
     get {
       var results = search (_node, "/c:CdtrAcct/c:Id/c:IBAN");
-      _iban = results->item(0)->get_content ();
+      _iban = results->item (0)->get_content ();
       return _iban;
     }
   }
 
-  private XPath.NodeSet* search(Xml.Node node, string xpath) {
+  private XPath.NodeSet* search (Xml.Node node, string xpath) {
     var context = new XPath.Context (node);
     context.register_ns ("c", NSPACE);
     var result = context.eval_expression (xpath);
