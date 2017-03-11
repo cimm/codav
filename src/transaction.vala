@@ -12,6 +12,7 @@ public class Transaction {
   private string _iban;
   private string _unstructured;
   private string _end_to_end;
+  private string _country;
 
   public Transaction.from_xml_node (Xml.Node node) {
     _node = node;
@@ -77,6 +78,14 @@ public class Transaction {
       var results = search ("/c:PmtId/c:EndToEndId");
       _end_to_end = results->item (0)->get_content ();
       return _end_to_end;
+    }
+  }
+
+  public string country {
+    get {
+      var results = search ("/c:Cdtr/c:PstlAdr/c:Ctry");
+      _country = results->item (0)->get_content ();
+      return _country;
     }
   }
 

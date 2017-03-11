@@ -8,7 +8,8 @@ public class MyWindow : Gtk.ApplicationWindow {
     BIC,
     IBAN,
     UNSTRUCTURED,
-    END_TO_END
+    END_TO_END,
+    COUNTRY
   }
 
   Gtk.ListStore list_store;
@@ -25,7 +26,8 @@ public class MyWindow : Gtk.ApplicationWindow {
     this.add_action_entries (actions, this);
 
     var tree_view = new Gtk.TreeView ();
-    list_store = new Gtk.ListStore (7, typeof (string),
+    list_store = new Gtk.ListStore (8, typeof (string),
+                                       typeof (string),
                                        typeof (string),
                                        typeof (string),
                                        typeof (string),
@@ -40,6 +42,7 @@ public class MyWindow : Gtk.ApplicationWindow {
     tree_view.insert_column_with_attributes (-1, "IBAN", cell, "text", Column.IBAN);
     tree_view.insert_column_with_attributes (-1, "Unstructured", cell, "text", Column.UNSTRUCTURED);
     tree_view.insert_column_with_attributes (-1, "End to end", cell, "text", Column.END_TO_END);
+    tree_view.insert_column_with_attributes (-1, "Country", cell, "text", Column.COUNTRY);
     tree_view.set_model (list_store);
 
     var scroll = new Gtk.ScrolledWindow (null, null);
@@ -75,7 +78,8 @@ public class MyWindow : Gtk.ApplicationWindow {
                             Column.BIC, t.bic,
                             Column.IBAN, t.iban,
                             Column.UNSTRUCTURED, t.unstructured,
-                            Column.END_TO_END, t.end_to_end);
+                            Column.END_TO_END, t.end_to_end,
+                            Column.COUNTRY, t.country);
     }
   }
 }
