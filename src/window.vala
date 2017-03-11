@@ -20,13 +20,18 @@ public class MyWindow : Gtk.ApplicationWindow {
 
     this.add_action_entries (actions, this);
 
-    var view = new Gtk.TreeView ();
+    var tree_view = new Gtk.TreeView ();
     list_store = new Gtk.ListStore (3, typeof (string), typeof (string), typeof (string));
-    view.insert_column_with_attributes (-1, "Name", new Gtk.CellRendererText (), "text", Column.NAME);
-    view.insert_column_with_attributes (-1, "BIC", new Gtk.CellRendererText (), "text", Column.BIC);
-    view.insert_column_with_attributes (-1, "IBAN", new Gtk.CellRendererText (), "text", Column.IBAN);
-    view.set_model (list_store);
-    this.add (view);
+    tree_view.insert_column_with_attributes (-1, "Name", new Gtk.CellRendererText (), "text", Column.NAME);
+    tree_view.insert_column_with_attributes (-1, "BIC", new Gtk.CellRendererText (), "text", Column.BIC);
+    tree_view.insert_column_with_attributes (-1, "IBAN", new Gtk.CellRendererText (), "text", Column.IBAN);
+    tree_view.set_model (list_store);
+
+    var scroll = new Gtk.ScrolledWindow (null, null);
+    scroll.set_policy (Gtk.PolicyType.AUTOMATIC, Gtk.PolicyType.AUTOMATIC);
+    scroll.add (tree_view);
+
+    this.add (scroll);
   }
 
   void open_cb (SimpleAction action, Variant? parameter) {
