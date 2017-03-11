@@ -6,9 +6,12 @@ public class Transaction {
   const string NSPACE = "urn:iso:std:iso:20022:tech:xsd:pain.001.001.03";
   Xml.Doc* _node;
   string _name;
+  string _currency;
+  string _amount;
   string _bic;
   string _iban;
   string _unstructured;
+  string _end_to_end;
 
   public Transaction.from_xml_node (Xml.Node node) {
     _node = node;
@@ -19,6 +22,29 @@ public class Transaction {
       var results = search ("/c:Cdtr/c:Nm");
       _name = results->item (0)->get_content ();
       return _name;
+    }
+  }
+
+  public string currency {
+    get {
+      var results = search ("/c:Amt/c:InstdAmt");
+      var attr = results->item (0)->properties;
+      while (attr != null) {
+        if (attr->name == "Ccy") {
+          _currency = attr->children->content;
+          break;
+        }
+        attr = attr->next;
+      }
+      return _currency;
+    }
+  }
+
+  public string amount {
+    get {
+      var results = search ("/c:Amt/c:InstdAmt");
+      _amount = results->item (0)->get_content ();
+      return _amount;
     }
   }
 
@@ -43,6 +69,14 @@ public class Transaction {
       var results = search ("/c:RmtInf/c:Ustrd");
       _unstructured = results->item (0)->get_content ();
       return _unstructured;
+    }
+  }
+
+  public string end_to_end {
+    get {
+      var results = search ("/c:PmtId/c:EndToEndId");
+      _end_to_end = results->item (0)->get_content ();
+      return _end_to_end;
     }
   }
 
