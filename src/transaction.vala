@@ -8,6 +8,7 @@ public class Transaction {
   string _name;
   string _bic;
   string _iban;
+  string _unstructured;
 
   public Transaction.from_xml_node (Xml.Node node) {
     _node = node;
@@ -34,6 +35,14 @@ public class Transaction {
       var results = search ("/c:CdtrAcct/c:Id/c:IBAN");
       _iban = results->item (0)->get_content ();
       return _iban;
+    }
+  }
+
+  public string unstructured {
+    get {
+      var results = search ("/c:RmtInf/c:Ustrd");
+      _unstructured = results->item (0)->get_content ();
+      return _unstructured;
     }
   }
 

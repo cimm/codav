@@ -4,7 +4,8 @@ public class MyWindow : Gtk.ApplicationWindow {
   enum Column {
     NAME,
     BIC,
-    IBAN
+    IBAN,
+    UNSTRUCTURED
   }
 
   Gtk.ListStore list_store;
@@ -21,10 +22,11 @@ public class MyWindow : Gtk.ApplicationWindow {
     this.add_action_entries (actions, this);
 
     var tree_view = new Gtk.TreeView ();
-    list_store = new Gtk.ListStore (3, typeof (string), typeof (string), typeof (string));
+    list_store = new Gtk.ListStore (4, typeof (string), typeof (string), typeof (string), typeof (string));
     tree_view.insert_column_with_attributes (-1, "Name", new Gtk.CellRendererText (), "text", Column.NAME);
     tree_view.insert_column_with_attributes (-1, "BIC", new Gtk.CellRendererText (), "text", Column.BIC);
     tree_view.insert_column_with_attributes (-1, "IBAN", new Gtk.CellRendererText (), "text", Column.IBAN);
+    tree_view.insert_column_with_attributes (-1, "Unstructured", new Gtk.CellRendererText (), "text", Column.UNSTRUCTURED);
     tree_view.set_model (list_store);
 
     var scroll = new Gtk.ScrolledWindow (null, null);
@@ -48,13 +50,13 @@ public class MyWindow : Gtk.ApplicationWindow {
   }
 
   private void open_file (string filename) {
-    TransactionList list = new TransactionList(filename);
+    TransactionList list = new TransactionList (filename);
     var transactions = list.load ();
 
     Gtk.TreeIter iter;
-    for (int i = 0; i < transactions.length; i++) {
+    foreach (Transaction t in transactions) {
       list_store.append (out iter);
-      list_store.set (iter, Column.NAME, transactions[i].name, Column.BIC, transactions[i].bic, Column.IBAN, transactions[i].iban);
+      list_store.set (iter, Column.NAME, t.name, Column.BIC, t.bic, Column.IBAN, t.iban, Column.UNSTRUCTURED, t.unstructured);
     }
   }
 }
