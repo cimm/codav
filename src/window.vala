@@ -1,7 +1,7 @@
 // modules: gtk+-3.0 TransactionList
 
 public class MyWindow : Gtk.ApplicationWindow {
-  enum Column {
+  private enum Column {
     NAME,
     CURRENCY,
     AMOUNT,
@@ -12,18 +12,24 @@ public class MyWindow : Gtk.ApplicationWindow {
     COUNTRY
   }
 
-  Gtk.ListStore list_store;
+  private Gtk.ListStore list_store;
+  private Gtk.HeaderBar header_bar;
 
-  const GLib.ActionEntry[] actions = {
+  private const GLib.ActionEntry[] actions = {
     { "open", open_cb }
   };
 
   internal MyWindow (MyApplication app) {
-    Object (application: app, title: "CODAv");
+    Object (application: app);
     this.set_default_size (700, 500);
     this.window_position = Gtk.WindowPosition.CENTER;
 
     this.add_action_entries (actions, this);
+
+    header_bar = new Gtk.HeaderBar ();
+    header_bar.show_close_button = true;
+    header_bar.title = "CODAv";
+    this.set_titlebar (header_bar);
 
     var tree_view = new Gtk.TreeView ();
     list_store = new Gtk.ListStore (8, typeof (string),
@@ -68,6 +74,8 @@ public class MyWindow : Gtk.ApplicationWindow {
   private void open_file (string filename) {
     TransactionList list = new TransactionList (filename);
     var transactions = list.load ();
+
+    header_bar.subtitle = filename;
 
     Gtk.TreeIter iter;
     foreach (Transaction t in transactions) {
