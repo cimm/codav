@@ -1,5 +1,3 @@
-// valac --pkg gtk+-3.0 --pkg libxml-2.0 -o codav src/*.vala
-
 // modules: gtk+-3.0 MyWindow
 
 class MyApplication : Gtk.Application {
