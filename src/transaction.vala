@@ -12,6 +12,11 @@ public class Transaction {
   private string _iban;
   private string _unstructured;
   private string _end_to_end;
+  private string _department;
+  private string _street_name;
+  private string _postal_code;
+  private string _town_name;
+  private string _building_number;
   private string _country;
 
   public Transaction.from_xml_node (Xml.Node node) {
@@ -78,6 +83,46 @@ public class Transaction {
       var results = search ("/c:PmtId/c:EndToEndId");
       _end_to_end = results->item (0)->get_content ();
       return _end_to_end;
+    }
+  }
+
+  public string department {
+    get {
+      var results = search ("/c:Cdtr/c:PstlAdr/c:Dept");
+      _department = results->item (0)->get_content ();
+      return _department;
+    }
+  }
+
+  public string street_name {
+    get {
+      var results = search ("/c:Cdtr/c:PstlAdr/c:StrtNm");
+      _street_name = results->item (0)->get_content ();
+      return _street_name;
+    }
+  }
+
+  public string postal_code {
+    get {
+      var results = search ("/c:Cdtr/c:PstlAdr/c:PstCd");
+      _postal_code = results->item (0)->get_content ();
+      return _postal_code;
+    }
+  }
+
+  public string town_name {
+    get {
+      var results = search ("/c:Cdtr/c:PstlAdr/c:TwnNm");
+      _town_name = results->item (0)->get_content ();
+      return _town_name;
+    }
+  }
+
+  public string building_number {
+    get {
+      var results = search ("/c:Cdtr/c:PstlAdr/c:BldgNb");
+      _building_number = results->item (0)->get_content ();
+      return _building_number;
     }
   }
 

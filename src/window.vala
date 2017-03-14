@@ -9,6 +9,11 @@ public class MyWindow : Gtk.ApplicationWindow {
     IBAN,
     UNSTRUCTURED,
     END_TO_END,
+    BUILDING_NUMBER,
+    DEPARTMENT,
+    STREET_NAME,
+    POSTAL_CODE,
+    TOWN_NAME,
     COUNTRY
   }
 
@@ -32,14 +37,19 @@ public class MyWindow : Gtk.ApplicationWindow {
     this.set_titlebar (header_bar);
 
     var tree_view = new Gtk.TreeView ();
-    list_store = new Gtk.ListStore (8, typeof (string),
-                                       typeof (string),
-                                       typeof (string),
-                                       typeof (string),
-                                       typeof (string),
-                                       typeof (string),
-                                       typeof (string),
-                                       typeof (string));
+    list_store = new Gtk.ListStore (13, typeof (string),
+                                        typeof (string),
+                                        typeof (string),
+                                        typeof (string),
+                                        typeof (string),
+                                        typeof (string),
+                                        typeof (string),
+                                        typeof (string),
+                                        typeof (string),
+                                        typeof (string),
+                                        typeof (string),
+                                        typeof (string),
+                                        typeof (string));
     var cell = new Gtk.CellRendererText ();
     tree_view.insert_column_with_attributes (-1, "Name", cell, "text", Column.NAME);
     tree_view.insert_column_with_attributes (-1, "Currency", cell, "text", Column.CURRENCY);
@@ -48,6 +58,11 @@ public class MyWindow : Gtk.ApplicationWindow {
     tree_view.insert_column_with_attributes (-1, "IBAN", cell, "text", Column.IBAN);
     tree_view.insert_column_with_attributes (-1, "Unstructured", cell, "text", Column.UNSTRUCTURED);
     tree_view.insert_column_with_attributes (-1, "End to end", cell, "text", Column.END_TO_END);
+    tree_view.insert_column_with_attributes (-1, "Department", cell, "text", Column.DEPARTMENT);
+    tree_view.insert_column_with_attributes (-1, "Street name", cell, "text", Column.STREET_NAME);
+    tree_view.insert_column_with_attributes (-1, "Building number", cell, "text", Column.BUILDING_NUMBER);
+    tree_view.insert_column_with_attributes (-1, "Postal code", cell, "text", Column.POSTAL_CODE);
+    tree_view.insert_column_with_attributes (-1, "Town name", cell, "text", Column.TOWN_NAME);
     tree_view.insert_column_with_attributes (-1, "Country", cell, "text", Column.COUNTRY);
     tree_view.set_model (list_store);
 
@@ -87,6 +102,11 @@ public class MyWindow : Gtk.ApplicationWindow {
                             Column.IBAN, t.iban,
                             Column.UNSTRUCTURED, t.unstructured,
                             Column.END_TO_END, t.end_to_end,
+                            Column.BUILDING_NUMBER, t.building_number,
+                            Column.DEPARTMENT, t.department,
+                            Column.STREET_NAME, t.street_name,
+                            Column.POSTAL_CODE, t.postal_code,
+                            Column.TOWN_NAME, t.town_name,
                             Column.COUNTRY, t.country);
     }
   }
