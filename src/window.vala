@@ -91,6 +91,7 @@ public class MyWindow : Gtk.ApplicationWindow {
     var transactions = list.load ();
 
     header_bar.subtitle = filename;
+    list_store.clear ();
 
     Gtk.TreeIter iter;
     foreach (Transaction t in transactions) {
