@@ -15,6 +15,7 @@ public class Transaction {
   private string _end_to_end_identification;
   private string[] _address_lines;
   private string _country;
+  private string _code;
   private string _issuer;
   private string _reference;
 
@@ -109,6 +110,14 @@ public class Transaction {
         _address_lines += node->get_content ();
       }
       return _address_lines;
+    }
+  }
+
+  public string code {
+    get {
+      var results = search ("/c:RmtInf/c:Strd/c:CdtrRefInf/c:Tp/c:CdOrPrtry/c:Cd");
+      _code = results->item (0)->get_content ();
+      return _code;
     }
   }
 
