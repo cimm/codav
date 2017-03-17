@@ -12,11 +12,7 @@ public class Transaction {
   private string _iban;
   private string _unstructured;
   private string _end_to_end_identification;
-  private string _department;
-  private string _street_name;
-  private string _postal_code;
-  private string _town_name;
-  private string _building_number;
+  private string[] _address_lines;
   private string _country;
 
   public Transaction.from_xml_node (Xml.Node node) {
@@ -86,51 +82,22 @@ public class Transaction {
     }
   }
 
-  public string department {
-    get {
-      var results = search ("/c:Cdtr/c:PstlAdr/c:Dept");
-      _department = results->item (0)->get_content ();
-      return _department;
-    }
-  }
-
-  public string street_name {
-    get {
-      var results = search ("/c:Cdtr/c:PstlAdr/c:StrtNm");
-      _street_name = results->item (0)->get_content ();
-      return _street_name;
-    }
-  }
-
-  public string postal_code {
-    get {
-      var results = search ("/c:Cdtr/c:PstlAdr/c:PstCd");
-      _postal_code = results->item (0)->get_content ();
-      return _postal_code;
-    }
-  }
-
-  public string town_name {
-    get {
-      var results = search ("/c:Cdtr/c:PstlAdr/c:TwnNm");
-      _town_name = results->item (0)->get_content ();
-      return _town_name;
-    }
-  }
-
-  public string building_number {
-    get {
-      var results = search ("/c:Cdtr/c:PstlAdr/c:BldgNb");
-      _building_number = results->item (0)->get_content ();
-      return _building_number;
-    }
-  }
-
   public string country {
     get {
       var results = search ("/c:Cdtr/c:PstlAdr/c:Ctry");
       _country = results->item (0)->get_content ();
       return _country;
+    }
+  }
+
+  public string[] address_lines {
+    get {
+      var results = search ("/c:Cdtr/c:PstlAdr/c:AdrLine");
+      for (int i = 0; i < results->length (); i++) {
+        var node = results->item (i);
+        _address_lines += node->get_content ();
+      }
+      return _address_lines;
     }
   }
 
