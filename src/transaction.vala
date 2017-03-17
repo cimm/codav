@@ -15,6 +15,7 @@ public class Transaction {
   private string _end_to_end_identification;
   private string[] _address_lines;
   private string _country;
+  private string _issuer;
   private string _reference;
 
   public Transaction.from_xml_node (Xml.Node node) {
@@ -111,6 +112,14 @@ public class Transaction {
     }
   }
 
+  public string issuer {
+    get {
+      var results = search ("/c:RmtInf/c:Strd/c:CdtrRefInf/c:Tp/c:Issr");
+      _issuer = results->item (0)->get_content ();
+      return _issuer;
+    }
+  }
+
   public string reference {
     get {
       var results = search ("/c:RmtInf/c:Strd/c:CdtrRefInf/c:Ref");
@@ -118,7 +127,6 @@ public class Transaction {
       return _reference;
     }
   }
-
 
   private XPath.NodeSet* search (string xpath) {
     var context = new XPath.Context (_node);

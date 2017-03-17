@@ -12,6 +12,7 @@ public class MyWindow : Gtk.ApplicationWindow {
     END_TO_END_IDENTIFICATION,
     COUNTRY,
     ADDRESS_LINES,
+    ISSUER,
     REFERENCE
   }
 
@@ -35,7 +36,8 @@ public class MyWindow : Gtk.ApplicationWindow {
     this.set_titlebar (header_bar);
 
     var tree_view = new Gtk.TreeView ();
-    list_store = new Gtk.ListStore (11, typeof (string),
+    list_store = new Gtk.ListStore (12, typeof (string),
+                                        typeof (string),
                                         typeof (string),
                                         typeof (string),
                                         typeof (string),
@@ -57,6 +59,7 @@ public class MyWindow : Gtk.ApplicationWindow {
     tree_view.insert_column_with_attributes (-1, "End to end", cell, "text", Column.END_TO_END_IDENTIFICATION);
     tree_view.insert_column_with_attributes (-1, "Country", cell, "text", Column.COUNTRY);
     tree_view.insert_column_with_attributes (-1, "Address lines", cell, "text", Column.ADDRESS_LINES);
+    tree_view.insert_column_with_attributes (-1, "Issuer", cell, "text", Column.ISSUER);
     tree_view.insert_column_with_attributes (-1, "Reference", cell, "text", Column.REFERENCE);
     tree_view.set_model (list_store);
 
@@ -100,6 +103,7 @@ public class MyWindow : Gtk.ApplicationWindow {
                             Column.END_TO_END_IDENTIFICATION, t.end_to_end_identification,
                             Column.COUNTRY, t.country,
                             Column.ADDRESS_LINES, string.joinv(", ", t.address_lines),
+                            Column.ISSUER, t.issuer,
                             Column.REFERENCE, t.reference);
     }
   }
