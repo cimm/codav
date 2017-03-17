@@ -8,6 +8,7 @@ public class MyWindow : Gtk.ApplicationWindow {
     BIC,
     IBAN,
     UNSTRUCTURED,
+    INSTRUCTION_IDENTIFICATION,
     END_TO_END_IDENTIFICATION,
     COUNTRY,
     ADDRESS_LINES
@@ -33,15 +34,16 @@ public class MyWindow : Gtk.ApplicationWindow {
     this.set_titlebar (header_bar);
 
     var tree_view = new Gtk.TreeView ();
-    list_store = new Gtk.ListStore (9, typeof (string),
-                                       typeof (string),
-                                       typeof (string),
-                                       typeof (string),
-                                       typeof (string),
-                                       typeof (string),
-                                       typeof (string),
-                                       typeof (string),
-                                       typeof (string));
+    list_store = new Gtk.ListStore (10, typeof (string),
+                                        typeof (string),
+                                        typeof (string),
+                                        typeof (string),
+                                        typeof (string),
+                                        typeof (string),
+                                        typeof (string),
+                                        typeof (string),
+                                        typeof (string),
+                                        typeof (string));
     var cell = new Gtk.CellRendererText ();
     tree_view.insert_column_with_attributes (-1, "Name", cell, "text", Column.NAME);
     tree_view.insert_column_with_attributes (-1, "Instructed amount currency", cell, "text", Column.INSTRUCTED_AMOUNT_CURRENCY);
@@ -49,6 +51,7 @@ public class MyWindow : Gtk.ApplicationWindow {
     tree_view.insert_column_with_attributes (-1, "BIC", cell, "text", Column.BIC);
     tree_view.insert_column_with_attributes (-1, "IBAN", cell, "text", Column.IBAN);
     tree_view.insert_column_with_attributes (-1, "Unstructured", cell, "text", Column.UNSTRUCTURED);
+    tree_view.insert_column_with_attributes (-1, "Instruction identification", cell, "text", Column.INSTRUCTION_IDENTIFICATION);
     tree_view.insert_column_with_attributes (-1, "End to end", cell, "text", Column.END_TO_END_IDENTIFICATION);
     tree_view.insert_column_with_attributes (-1, "Country", cell, "text", Column.COUNTRY);
     tree_view.insert_column_with_attributes (-1, "Address lines", cell, "text", Column.ADDRESS_LINES);
@@ -90,6 +93,7 @@ public class MyWindow : Gtk.ApplicationWindow {
                             Column.BIC, t.bic,
                             Column.IBAN, t.iban,
                             Column.UNSTRUCTURED, t.unstructured,
+                            Column.INSTRUCTION_IDENTIFICATION, t.instruction_identification,
                             Column.END_TO_END_IDENTIFICATION, t.end_to_end_identification,
                             Column.COUNTRY, t.country,
                             Column.ADDRESS_LINES, string.joinv(", ", t.address_lines));

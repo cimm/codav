@@ -11,6 +11,7 @@ public class Transaction {
   private string _bic;
   private string _iban;
   private string _unstructured;
+  private string _instruction_identification;
   private string _end_to_end_identification;
   private string[] _address_lines;
   private string _country;
@@ -71,6 +72,14 @@ public class Transaction {
       var results = search ("/c:RmtInf/c:Ustrd");
       _unstructured = results->item (0)->get_content ();
       return _unstructured;
+    }
+  }
+
+  public string instruction_identification {
+    get {
+      var results = search ("/c:PmtId/c:InstrId");
+      _instruction_identification = results->item (0)->get_content ();
+      return _instruction_identification;
     }
   }
 
