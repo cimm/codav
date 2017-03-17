@@ -25,7 +25,7 @@ public class MyWindow : Gtk.ApplicationWindow {
 
   internal MyWindow (MyApplication app) {
     Object (application: app);
-    this.set_default_size (700, 500);
+    this.set_default_size (900, 500);
     this.window_position = Gtk.WindowPosition.CENTER;
 
     this.add_action_entries (actions, this);
