@@ -3,12 +3,12 @@
 public class MyWindow : Gtk.ApplicationWindow {
   private enum Column {
     NAME,
-    CURRENCY,
-    AMOUNT,
+    INSTRUCTED_AMOUNT_CURRENCY,
+    INSTRUCTED_AMOUNT,
     BIC,
     IBAN,
     UNSTRUCTURED,
-    END_TO_END,
+    END_TO_END_IDENTIFICATION,
     BUILDING_NUMBER,
     DEPARTMENT,
     STREET_NAME,
@@ -52,12 +52,12 @@ public class MyWindow : Gtk.ApplicationWindow {
                                         typeof (string));
     var cell = new Gtk.CellRendererText ();
     tree_view.insert_column_with_attributes (-1, "Name", cell, "text", Column.NAME);
-    tree_view.insert_column_with_attributes (-1, "Currency", cell, "text", Column.CURRENCY);
-    tree_view.insert_column_with_attributes (-1, "Amount", cell, "text", Column.AMOUNT);
+    tree_view.insert_column_with_attributes (-1, "Instructed amount currency", cell, "text", Column.INSTRUCTED_AMOUNT_CURRENCY);
+    tree_view.insert_column_with_attributes (-1, "Instructed amount", cell, "text", Column.INSTRUCTED_AMOUNT);
     tree_view.insert_column_with_attributes (-1, "BIC", cell, "text", Column.BIC);
     tree_view.insert_column_with_attributes (-1, "IBAN", cell, "text", Column.IBAN);
     tree_view.insert_column_with_attributes (-1, "Unstructured", cell, "text", Column.UNSTRUCTURED);
-    tree_view.insert_column_with_attributes (-1, "End to end", cell, "text", Column.END_TO_END);
+    tree_view.insert_column_with_attributes (-1, "End to end", cell, "text", Column.END_TO_END_IDENTIFICATION);
     tree_view.insert_column_with_attributes (-1, "Department", cell, "text", Column.DEPARTMENT);
     tree_view.insert_column_with_attributes (-1, "Street name", cell, "text", Column.STREET_NAME);
     tree_view.insert_column_with_attributes (-1, "Building number", cell, "text", Column.BUILDING_NUMBER);
@@ -97,12 +97,12 @@ public class MyWindow : Gtk.ApplicationWindow {
     foreach (Transaction t in transactions) {
       list_store.append (out iter);
       list_store.set (iter, Column.NAME, t.name,
-                            Column.CURRENCY, t.currency,
-                            Column.AMOUNT, t.amount,
+                            Column.INSTRUCTED_AMOUNT_CURRENCY, t.instructed_amount_currency,
+                            Column.INSTRUCTED_AMOUNT, t.instructed_amount,
                             Column.BIC, t.bic,
                             Column.IBAN, t.iban,
                             Column.UNSTRUCTURED, t.unstructured,
-                            Column.END_TO_END, t.end_to_end,
+                            Column.END_TO_END_IDENTIFICATION, t.end_to_end_identification,
                             Column.BUILDING_NUMBER, t.building_number,
                             Column.DEPARTMENT, t.department,
                             Column.STREET_NAME, t.street_name,

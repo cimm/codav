@@ -6,12 +6,12 @@ public class Transaction {
   private const string NSPACE = "urn:iso:std:iso:20022:tech:xsd:pain.001.001.03";
   private Xml.Doc* _node;
   private string _name;
-  private string _currency;
-  private string _amount;
+  private string _instructed_amount_currency;
+  private string _instructed_amount;
   private string _bic;
   private string _iban;
   private string _unstructured;
-  private string _end_to_end;
+  private string _end_to_end_identification;
   private string _department;
   private string _street_name;
   private string _postal_code;
@@ -31,26 +31,26 @@ public class Transaction {
     }
   }
 
-  public string currency {
+  public string instructed_amount_currency {
     get {
       var results = search ("/c:Amt/c:InstdAmt");
       var attr = results->item (0)->properties;
       while (attr != null) {
         if (attr->name == "Ccy") {
-          _currency = attr->children->content;
+          _instructed_amount_currency = attr->children->content;
           break;
         }
         attr = attr->next;
       }
-      return _currency;
+      return _instructed_amount_currency;
     }
   }
 
-  public string amount {
+  public string instructed_amount {
     get {
       var results = search ("/c:Amt/c:InstdAmt");
-      _amount = results->item (0)->get_content ();
-      return _amount;
+      _instructed_amount = results->item (0)->get_content ();
+      return _instructed_amount;
     }
   }
 
@@ -78,11 +78,11 @@ public class Transaction {
     }
   }
 
-  public string end_to_end {
+  public string end_to_end_identification {
     get {
       var results = search ("/c:PmtId/c:EndToEndId");
-      _end_to_end = results->item (0)->get_content ();
-      return _end_to_end;
+      _end_to_end_identification = results->item (0)->get_content ();
+      return _end_to_end_identification;
     }
   }
 
