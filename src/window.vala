@@ -1,4 +1,4 @@
-// modules: gtk+-3.0 TransactionList
+// modules: gtk+-3.0 TransactionList GroupHeader
 
 public class MyWindow : Gtk.ApplicationWindow {
   private enum Column {
@@ -19,6 +19,8 @@ public class MyWindow : Gtk.ApplicationWindow {
 
   private Gtk.ListStore list_store;
   private Gtk.HeaderBar header_bar;
+  private Gtk.Button group_header_button;
+  private GroupHeader group_header;
 
   private const GLib.ActionEntry[] actions = {
     { "open", open_cb }
@@ -31,11 +33,21 @@ public class MyWindow : Gtk.ApplicationWindow {
 
     this.add_action_entries (actions, this);
 
+    // HEADER
     header_bar = new Gtk.HeaderBar ();
     header_bar.show_close_button = true;
     header_bar.title = "CODAv";
     this.set_titlebar (header_bar);
 
+    group_header_button = new Gtk.Button.with_label ("?");
+    group_header_button.margin = 5;
+    header_bar.pack_end (group_header_button);
+    group_header_button.set_sensitive (false);
+    group_header_button.clicked.connect (() => {
+      group_header_cb (group_header_button);
+    });
+
+    // BODY
     var tree_view = new Gtk.TreeView ();
     list_store = new Gtk.ListStore (13, typeof (string),
                                         typeof (string),
@@ -69,11 +81,34 @@ public class MyWindow : Gtk.ApplicationWindow {
     var scroll = new Gtk.ScrolledWindow (null, null);
     scroll.set_policy (Gtk.PolicyType.AUTOMATIC, Gtk.PolicyType.AUTOMATIC);
     scroll.add (tree_view);
-
     this.add (scroll);
   }
 
-  void open_cb (SimpleAction action, Variant? parameter) {
+  private void group_header_cb (Gtk.Button button) {
+    var grid = new Gtk.Grid ();
+    grid.margin = 5;
+
+    var label = new Gtk.Label ("ID");
+    label.xalign = 0;
+    grid.attach (label, 0, 0, 1, 2);
+    grid.attach (new Gtk.Label (group_header.message_identification), 3, 0, 1, 2);
+
+    label = new Gtk.Label ("Created");
+    label.xalign = 0;
+    grid.attach (label, 0, 2, 1, 2);
+    grid.attach (new Gtk.Label (group_header.creation_date_time), 3, 2, 1, 2);
+
+    label = new Gtk.Label ("Transactions");
+    label.xalign = 0;
+    grid.attach (label, 0, 4, 1, 2);
+    grid.attach (new Gtk.Label (group_header.number_of_transactions), 3, 4, 1, 2);
+
+    var group_header_popover = new Gtk.Popover (button);
+    group_header_popover.add (grid);
+    group_header_popover.show_all ();
+  }
+
+  private void open_cb (SimpleAction action, Variant? parameter) {
     var file_chooser = new Gtk.FileChooserDialog ("Select CODA XML file", this,
                                                  Gtk.FileChooserAction.OPEN,
                                                  "_Cancel", Gtk.ResponseType.CANCEL,
@@ -87,11 +122,13 @@ public class MyWindow : Gtk.ApplicationWindow {
   }
 
   private void open_file (string filename) {
+    group_header = new GroupHeader (filename);
     TransactionList list = new TransactionList (filename);
     var transactions = list.load ();
 
     header_bar.subtitle = filename;
     list_store.clear ();
+    group_header_button.set_sensitive (true);
 
     Gtk.TreeIter iter;
     foreach (Transaction t in transactions) {
