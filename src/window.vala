@@ -39,7 +39,7 @@ public class MyWindow : Gtk.ApplicationWindow {
     header_bar.title = "CODAv";
     this.set_titlebar (header_bar);
 
-    group_header_button = new Gtk.Button.with_label ("?");
+    group_header_button = new Gtk.MenuButton ();
     group_header_button.margin = 5;
     header_bar.pack_end (group_header_button);
     group_header_button.set_sensitive (false);
