@@ -21,12 +21,15 @@ public class MyWindow : Gtk.ApplicationWindow {
   private Gtk.HeaderBar header_bar;
   private Gtk.Button group_header_button;
   private GroupHeader group_header;
+  private TransactionList transaction_list;
 
   private const GLib.ActionEntry[] actions = {
     { "open", open_cb }
   };
 
   internal MyWindow (MyApplication app) {
+    // CODA uses American decimal marks so let's be coherent
+    Intl.setlocale(LocaleCategory.NUMERIC, "C");
     Object (application: app);
     this.set_default_size (900, 500);
     this.window_position = Gtk.WindowPosition.CENTER;
@@ -103,6 +106,11 @@ public class MyWindow : Gtk.ApplicationWindow {
     grid.attach (label, 0, 4, 1, 2);
     grid.attach (new Gtk.Label (group_header.number_of_transactions), 3, 4, 1, 2);
 
+    label = new Gtk.Label ("Total EUR");
+    label.xalign = 0;
+    grid.attach (label, 0, 6, 1, 2);
+    grid.attach (new Gtk.Label (transaction_list.total_amount("EUR")), 3, 6, 1, 2);
+
     var group_header_popover = new Gtk.Popover (button);
     group_header_popover.add (grid);
     group_header_popover.show_all ();
@@ -123,8 +131,8 @@ public class MyWindow : Gtk.ApplicationWindow {
 
   private void open_file (string filename) {
     group_header = new GroupHeader (filename);
-    TransactionList list = new TransactionList (filename);
-    var transactions = list.load ();
+    transaction_list = new TransactionList (filename);
+    var transactions = transaction_list.load ();
 
     header_bar.subtitle = filename;
     list_store.clear ();
