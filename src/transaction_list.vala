@@ -1,6 +1,7 @@
 // modules: libxml-2.0 Transaction
 
 using Xml;
+using Gee;
 
 public class TransactionList {
   private const string NSPACE = "urn:iso:std:iso:20022:tech:xsd:pain.001.001.03"; 
@@ -20,14 +21,17 @@ public class TransactionList {
     return transactions;
   }
 
-  public string total_amount (string currency) {
-    var total_cents = 0;
+  public HashMap<string, string> total_amounts () {
+    var cents = new HashMap<string, int> ();
     foreach (Transaction transaction in load ()) {
-      if (transaction.instructed_amount_currency.casefold () == currency.casefold ()) {
-        total_cents += amount_to_cents (transaction.instructed_amount);
-      }
+      var currency = transaction.instructed_amount_currency;
+      cents[currency] = cents[currency] + amount_to_cents (transaction.instructed_amount);
     }
-    return cents_to_amount(total_cents);
+    var amounts = new HashMap<string, string> ();
+    foreach (var entry in cents.entries) {
+      amounts[entry.key] = cents_to_amount (entry.value);
+    }
+    return amounts;
   }
 
   private XPath.NodeSet* search (string xpath) {
@@ -38,7 +42,7 @@ public class TransactionList {
   }
 
   private int amount_to_cents (string amount) {
-    return (int) (amount.to_double () * 100);
+    return (int) (double.parse (amount) * 100);
   }
 
   private string cents_to_amount (int cents) {

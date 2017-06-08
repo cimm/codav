@@ -91,25 +91,16 @@ public class MyWindow : Gtk.ApplicationWindow {
     var grid = new Gtk.Grid ();
     grid.margin = 5;
 
-    var label = new Gtk.Label ("ID");
-    label.xalign = 0;
-    grid.attach (label, 0, 0, 1, 2);
-    grid.attach (new Gtk.Label (group_header.message_identification), 3, 0, 1, 2);
-
-    label = new Gtk.Label ("Created");
-    label.xalign = 0;
-    grid.attach (label, 0, 2, 1, 2);
-    grid.attach (new Gtk.Label (group_header.creation_date_time), 3, 2, 1, 2);
-
-    label = new Gtk.Label ("Transactions");
-    label.xalign = 0;
-    grid.attach (label, 0, 4, 1, 2);
-    grid.attach (new Gtk.Label (group_header.number_of_transactions), 3, 4, 1, 2);
-
-    label = new Gtk.Label ("Total EUR");
-    label.xalign = 0;
-    grid.attach (label, 0, 6, 1, 2);
-    grid.attach (new Gtk.Label (transaction_list.total_amount("EUR")), 3, 6, 1, 2);
+    var x_pos = 0;
+    add_label_to_grid (grid, x_pos, "ID", group_header.message_identification);
+    x_pos++;
+    add_label_to_grid (grid, x_pos, "Created", group_header.creation_date_time);
+    x_pos++;
+    add_label_to_grid (grid, x_pos, "Transactions", group_header.number_of_transactions);
+    foreach (var entry in transaction_list.total_amounts ().entries) {
+      x_pos++;
+      add_label_to_grid (grid, x_pos, @"Total $(entry.key)", entry.value);
+    }
 
     var group_header_popover = new Gtk.Popover (button);
     group_header_popover.add (grid);
@@ -155,5 +146,12 @@ public class MyWindow : Gtk.ApplicationWindow {
                             Column.ISSUER, t.issuer,
                             Column.REFERENCE, t.reference);
     }
+  }
+
+  private void add_label_to_grid (Gtk.Grid grid, int x_pos, string title, string value) {
+    var label = new Gtk.Label (title);
+    label.xalign = 0;
+    grid.attach (label, 0, x_pos * 2, 1, 2);
+    grid.attach (new Gtk.Label (value), 3, x_pos * 2, 1, 2);
   }
 }

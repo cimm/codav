@@ -8,8 +8,8 @@ WARNING: It's in heavy development right now and is in no way ready to use.
 
 ## Installation
 
-CODAv is tested on Ubuntu 16.04 and macOS El Capitan. It's written in Vala and depends on GTK 3 and libxml 2.
+CODAv is tested on Ubuntu 16.04 and macOS El Capitan. It's written in Vala and depends on GTK 3 and libxml 2 and libgee 0.8.
 
 ```
-valac --pkg gtk+-3.0 --pkg libxml-2.0 -o codav src/*.vala
+valac --pkg gtk+-3.0 --pkg libxml-2.0 --pkg gee-0.8 -o codav src/*.vala
 ```
