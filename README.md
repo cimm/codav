@@ -4,7 +4,9 @@ An "XML message for Credit Transfer Initiation" (ISO 20022 XML) file encodes Eur
 
 CODAv is a desktop application that understands these electronic messages and serves as a viewer to verify the contents of these files. CODAv follows the [Belgian implementation guidelines](https://www.febelfin.be/sites/default/files/files/standard-credit_transfer-xml-v31-en_0.pdf) as defined by the Belgian sector federation [Febelfin](https://www.febelfin.be).
 
-WARNING: It's in heavy development right now and is in no way ready to use.
+![Screenshot](data/Screenshot.png)
+
+The current itteration shows all fields from the CODA XML in a table view like one would expect on a spreadsheet. A sperate panel shows the header fields and the sum of all transactions per currency.
 
 ## Installation
 
