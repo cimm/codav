@@ -20,11 +20,11 @@ public class TransactionList {
     return transactions;
   }
 
-  public string total_amount(string currency) {
+  public string total_amount (string currency) {
     var total_cents = 0;
     foreach (Transaction transaction in load ()) {
-      if (transaction.instructed_amount_currency.casefold() == currency.casefold()) {
-        total_cents += amount_to_cents(transaction.instructed_amount);
+      if (transaction.instructed_amount_currency.casefold () == currency.casefold ()) {
+        total_cents += amount_to_cents (transaction.instructed_amount);
       }
     }
     return cents_to_amount(total_cents);
@@ -37,16 +37,11 @@ public class TransactionList {
     return result->nodesetval;
   }
 
-  private int amount_to_cents(string amount) {
-    var parts = amount.split(".");
-    var amount_cents = int.parse(parts[0]) * 100;
-    if (parts.length == 2) {
-      amount_cents += int.parse(parts[1]);
-    }
-    return amount_cents;
+  private int amount_to_cents (string amount) {
+    return (int) (amount.to_double () * 100);
   }
 
-  private string cents_to_amount(int cents) {
+  private string cents_to_amount (int cents) {
     return "%.2f".printf (cents / 100.0);
   }
 
