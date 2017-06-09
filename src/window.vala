@@ -97,9 +97,10 @@ public class MyWindow : Gtk.ApplicationWindow {
     add_label_to_grid (grid, x_pos, "Created", group_header.creation_date_time);
     x_pos++;
     add_label_to_grid (grid, x_pos, "Transactions", group_header.number_of_transactions);
-    foreach (var entry in transaction_list.total_amounts ().entries) {
+    var amounts = transaction_list.total_amounts ();
+    foreach (var key in amounts.get_keys ()) {
       x_pos++;
-      add_label_to_grid (grid, x_pos, @"Total $(entry.key)", entry.value);
+      add_label_to_grid (grid, x_pos, @"Total $(key)", amounts.get (key));
     }
 
     var group_header_popover = new Gtk.Popover (button);

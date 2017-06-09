@@ -1,7 +1,6 @@
 // modules: libxml-2.0 Transaction
 
 using Xml;
-using Gee;
 
 public class TransactionList {
   private const string NSPACE = "urn:iso:std:iso:20022:tech:xsd:pain.001.001.03"; 
@@ -21,15 +20,16 @@ public class TransactionList {
     return transactions;
   }
 
-  public HashMap<string, string> total_amounts () {
-    var cents = new HashMap<string, int> ();
+  public GLib.HashTable<string, string> total_amounts () {
+    var cents = new GLib.HashTable<string, int> (str_hash, str_equal);
     foreach (Transaction transaction in load ()) {
       var currency = transaction.instructed_amount_currency;
-      cents[currency] = cents[currency] + amount_to_cents (transaction.instructed_amount);
+      cents.insert (currency, cents.get (currency) + amount_to_cents (transaction.instructed_amount));
     }
-    var amounts = new HashMap<string, string> ();
-    foreach (var entry in cents.entries) {
-      amounts[entry.key] = cents_to_amount (entry.value);
+    var amounts = new GLib.HashTable<string, string> (str_hash, str_equal);
+    foreach (var key in cents.get_keys ()) {
+      var val = cents.get (key);
+      amounts.insert (key, cents_to_amount (val));
     }
     return amounts;
   }

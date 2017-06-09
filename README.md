@@ -8,10 +8,26 @@ CODAv is a desktop application that understands these electronic messages and se
 
 The current itteration shows all fields from the CODA XML in a table view like one would expect on a spreadsheet. A sperate panel shows the header fields and the sum of all transactions per currency.
 
-## Installation
+## Install
 
-CODAv is tested on Ubuntu 16.04 and macOS El Capitan. It's written in Vala and depends on GTK 3 and libxml 2 and libgee 0.8.
+CODAv is tested on Ubuntu 16.04 and macOS El Capitan. It's written in Vala and depends on GTK 3 and libxml 2.
+
+### Linux (Ubuntu)
+
+To compile CODAv from source on an Ubuntu 16.10 machine:
 
 ```
-valac --pkg gtk+-3.0 --pkg libxml-2.0 --pkg gee-0.8 -o codav src/*.vala
+sudo add-apt-repository ppa:vala-team
+sudo apt update
+apt install valac libgtk-3-dev libxml2-dev
+valac --pkg gtk+-3.0 --pkg libxml-2.0 -o codav src/*.vala
+```
+
+### macOS (El Capitan)
+
+Make sure you have [Homebrew](https://brew.sh/) and run:
+
+```
+brew install gtk+3 adwaita-icon-theme vala
+valac --pkg gtk+-3.0 --pkg libxml-2.0 -o codav src/*.vala
 ```
