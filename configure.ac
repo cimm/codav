@@ -1,0 +1,26 @@
+AC_INIT(CODAv, 0.1)
+AC_CONFIG_SRCDIR(src/codav.vala)
+
+AM_INIT_AUTOMAKE
+
+AC_PROG_CC
+AC_PROG_CC_STDC
+AM_PROG_VALAC([0.34.0])
+AC_PROG_INSTALL
+
+CODAV_PACKAGES="--pkg gtk+-3.0 --pkg libxml-2.0"
+PKG_CHECK_MODULES(CODAV, [
+  gtk+-3.0
+  libxml-2.0
+])
+
+AC_SUBST(CODAV_CFLAGS)
+AC_SUBST(CODAV_LIBS)
+AC_SUBST(CODAV_PACKAGES)
+AC_CONFIG_FILES([
+  Makefile
+  data/codav.desktop
+  data/Makefile
+  src/Makefile
+])
+AC_OUTPUT
