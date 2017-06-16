@@ -1,5 +1,5 @@
-AC_INIT(CODAv, 0.1)
-AC_CONFIG_SRCDIR(src/codav.vala)
+AC_INIT([CODAv], [0.1])
+AC_CONFIG_SRCDIR([src/codav.vala])
 
 AM_INIT_AUTOMAKE
 
@@ -19,7 +19,7 @@ AC_SUBST(CODAV_LIBS)
 AC_SUBST(CODAV_PACKAGES)
 AC_CONFIG_FILES([
   Makefile
-  data/codav.desktop
+  data/codav.desktop.in
   data/Makefile
   src/Makefile
 ])

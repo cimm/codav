@@ -1,0 +1,15 @@
+[Desktop Entry]
+_Name=CODAv
+_Comment=Reads CODA SEPA payment XML files
+_Keywords=coda;xml;sepa;payments;
+Categories=Office;Viewer;Finance;GTK;
+Encoding=UTF-8
+Exec=codav
+GenericName=CODA Viewer
+Icon=application-default-icon
+Keywords=CODA;SEPA;Finance;
+MimeType=text/xml;application/xml
+StartupNotify=true
+Terminal=false
+Type=Application
+Version=0.1

@@ -1,14 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<component type="desktop">
-  <id>com.github.cimm.codav.desktop</id>
-  <metadata_license>GPL</metadata_license>
+<application>
+  <id type="desktop">codav.desktop</id>
+  <metadata_license>CC0-1.0</metadata_license>
+  <project_license>GPL-3.0</project_license>
   <name>CODAv</name>
   <summary>Reads CODA SEPA payment XML files</summary>
   <description>
     <p>An "XML message for Credit Transfer Initiation" (ISO 20022 XML) file encodes European credit transfers (SEPA) in a standard way. It's often refered to as a "CODA (Coded Statement of Account) file". It requests the movement of funds from the debtor account to a creditor.</p>
     <p>CODAv is a desktop application that understands these electronic messages and serves as a viewer to verify the contents of these files. CODAv follows the <a href="https://www.febelfin.be/sites/default/files/files/standard-credit_transfer-xml-v31-en_0.pdf">Belgian implementation guidelines</a> as defined by the Belgian sector federation <a href="https://www.febelfin.be">Febelfin</a>.</p>
   </description>
+  <url type="homepage">https://github.com/cimm/codav</url>
+  <screenshots>
+    <screenshot type="default">https://raw.githubusercontent.com/cimm/codav/master/data/Screenshot.png</screenshot>
+  </screenshots>
   <custom>
     <value key="x-appcenter-suggested-price">0</value>
   </custom>
-</component>
+</application>
