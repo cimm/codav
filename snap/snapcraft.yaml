@@ -14,5 +14,5 @@ apps:
 parts:
   codav:
     source: .
-    plugin: autotools
+    plugin: cmake
     after: [desktop-gtk3]

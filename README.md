@@ -12,10 +12,10 @@ The current itteration shows all fields from the CODA XML in a table view like o
 
 CODAv is tested on Ubuntu 16.04 and macOS El Capitan. It's written in Vala and depends on GTK 3 and libxml 2.
 
-### Autotools
+### CMake
 
 ```
-./autogen.sh
+cmake .
 make
 sudo make install
 ```
