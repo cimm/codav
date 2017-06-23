@@ -121,7 +121,7 @@ public class MyWindow : Gtk.ApplicationWindow {
     file_chooser.destroy ();
   }
 
-  private void open_file (string filename) {
+  public void open_file (string filename) {
     group_header = new GroupHeader (filename);
     transaction_list = new TransactionList (filename);
     var transactions = transaction_list.load ();
