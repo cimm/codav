@@ -10,11 +10,11 @@ The current itteration shows all fields from the CODA XML in a table view like o
 
 ## Install
 
-CODAv is tested on Ubuntu 16.04 and macOS Sierra. It's written in Vala and depends on GTK 3 and libxml 2. Download or clone this repository and run the following from within the root directory.
+CODAv is tested on Ubuntu 16.04 and macOS Sierra. It's written in Vala and depends on GTK 3 and libxml 2. [Download](https://github.com/cimm/codav/archive/master.zip) or [clone](https://github.com/cimm/codav.git) the repository and run the following from within its root directory.
 
 ### Linux
 
-To compile CODAv from source on an Ubuntu 16.10 machine:
+Install the dpendencies first, we use the Vala repository for a more recent Vala version.
 
 ```
 sudo add-apt-repository ppa:vala-team
@@ -22,20 +22,25 @@ sudo apt update
 apt install valac libgtk-3-dev libxml2-dev
 ```
 
+Now build and install CODAv:
+
 ```
 mkdir build
 cd build
 cmake -DCMAKE_INSTALL_PREFIX=/usr ..
+make
 sudo make install
 ```
 
 ### macOS
 
-Make sure you have [Homebrew](https://brew.sh/) and run:
+Make sure you have [Homebrew](https://brew.sh/) to install the dependencies:
 
 ```
 brew install gtk+3 adwaita-icon-theme vala cmake
 ```
+
+Now build and install CODAv:
 
 ```
 mkdir build
