@@ -12,14 +12,6 @@ The current itteration shows all fields from the CODA XML in a table view like o
 
 CODAv is tested on Ubuntu 16.04 and macOS El Capitan. It's written in Vala and depends on GTK 3 and libxml 2.
 
-### CMake
-
-```
-cmake .
-make
-sudo make install
-```
-
 ### Linux (Ubuntu)
 
 To compile CODAv from source on an Ubuntu 16.10 machine:
@@ -28,7 +20,9 @@ To compile CODAv from source on an Ubuntu 16.10 machine:
 sudo add-apt-repository ppa:vala-team
 sudo apt update
 apt install valac libgtk-3-dev libxml2-dev
-valac --pkg gtk+-3.0 --pkg libxml-2.0 -o codav src/*.vala
+cmake .
+make
+sudo make install
 ```
 
 ### macOS (El Capitan)
@@ -36,6 +30,8 @@ valac --pkg gtk+-3.0 --pkg libxml-2.0 -o codav src/*.vala
 Make sure you have [Homebrew](https://brew.sh/) and run:
 
 ```
-brew install gtk+3 adwaita-icon-theme vala
-valac --pkg gtk+-3.0 --pkg libxml-2.0 -o codav src/*.vala
+brew install gtk+3 adwaita-icon-theme vala cmake
+cmake .
+make
+sudo make install
 ```
