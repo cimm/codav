@@ -1,9 +1,2 @@
-codav
-src/*.c
-src/config.vala
 example/*
-CMakeCache.txt
-CMakeFiles/
-Makefile
-cmake_install.cmake
-install_manifest.txt
+build/

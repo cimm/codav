@@ -20,8 +20,12 @@ To compile CODAv from source on an Ubuntu 16.10 machine:
 sudo add-apt-repository ppa:vala-team
 sudo apt update
 apt install valac libgtk-3-dev libxml2-dev
-cmake .
-make
+```
+
+```
+mkdir build
+cd build
+cmake -DCMAKE_INSTALL_PREFIX=/usr ..
 sudo make install
 ```
 
@@ -31,7 +35,12 @@ Make sure you have [Homebrew](https://brew.sh/) and run:
 
 ```
 brew install gtk+3 adwaita-icon-theme vala cmake
-cmake .
+```
+
+```
+mkdir build
+cd build
+cmake -DCMAKE_INSTALL_PREFIX=/usr ..
 make
 sudo make install
 ```

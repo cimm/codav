@@ -32,14 +32,7 @@ class MyApplication : Gtk.Application {
 
     this.add_action_entries (actions, this);
 
-    var builder = new Gtk.Builder ();
-    try {
-      var ui_file = GLib.Path.build_filename (Config.PKGDATADIR, "appmenu.ui");
-      builder.add_from_file (ui_file);
-    } catch (Error e) {
-      error ("Unable to load file: %s", e.message);
-    }
-
+    var builder = new Gtk.Builder.from_resource ("/cimm/codav/appmenu.ui");
     this.app_menu = builder.get_object ("appmenu") as MenuModel;
   }
 }
