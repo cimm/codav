@@ -28,6 +28,8 @@ add_definitions(${DEPS_CFLAGS})
 link_libraries(${DEPS_LIBRARIES})
 link_directories(${DEPS_LIBRARY_DIRS})
 
+configure_file (${CMAKE_SOURCE_DIR}/config.vala.cmake ${CMAKE_BINARY_DIR}/src/config.vala)
+
 find_package(Vala REQUIRED)
 
 include(ValaVersion)
@@ -40,6 +42,7 @@ vala_precompile(VALA_C
         src/transaction.vala
         src/transaction_list.vala
         src/window.vala
+        src/config.vala
 PACKAGES
         gtk+-3.0
         libxml-2.0
@@ -52,4 +55,5 @@ add_executable(codav ${VALA_C})
 
 install (TARGETS codav RUNTIME DESTINATION bin)
 install (FILES ${CMAKE_CURRENT_SOURCE_DIR}/data/codav.desktop DESTINATION share/applications)
-install (FILES ${CMAKE_CURRENT_SOURCE_DIR}/data/codav.appdata.xml DESTINATION share/appdata)
+install (FILES ${CMAKE_CURRENT_SOURCE_DIR}/data/codav.appdata.xml DESTINATION share/codav)
+install (FILES ${CMAKE_CURRENT_SOURCE_DIR}/data/appmenu.ui DESTINATION share/codav)

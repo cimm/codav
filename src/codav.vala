@@ -34,7 +34,8 @@ class MyApplication : Gtk.Application {
 
     var builder = new Gtk.Builder ();
     try {
-      builder.add_from_file ("data/appmenu.ui");
+      var ui_file = GLib.Path.build_filename (Config.PKGDATADIR, "appmenu.ui");
+      builder.add_from_file (ui_file);
     } catch (Error e) {
       error ("Unable to load file: %s", e.message);
     }
