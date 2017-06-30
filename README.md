@@ -10,9 +10,9 @@ The current itteration shows all fields from the CODA XML in a table view like o
 
 ## Install
 
-CODAv is tested on Ubuntu 16.04 and macOS El Capitan. It's written in Vala and depends on GTK 3 and libxml 2. Download or clone this repository and run the following from within the root directory.
+CODAv is tested on Ubuntu 16.04 and macOS Sierra. It's written in Vala and depends on GTK 3 and libxml 2. Download or clone this repository and run the following from within the root directory.
 
-### Linux (Ubuntu)
+### Linux
 
 To compile CODAv from source on an Ubuntu 16.10 machine:
 
@@ -25,7 +25,7 @@ make
 sudo make install
 ```
 
-### macOS (El Capitan)
+### macOS
 
 Make sure you have [Homebrew](https://brew.sh/) and run:
 
