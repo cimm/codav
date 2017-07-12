@@ -20,6 +20,8 @@ public class MyWindow : Gtk.ApplicationWindow {
   private Gtk.ListStore list_store;
   private Gtk.HeaderBar header_bar;
   private Gtk.Button group_header_button;
+  private Gtk.SearchEntry search_entry;
+  private Gtk.TreeModelFilter tree_filter;
   private GroupHeader group_header;
   private TransactionList transaction_list;
 
@@ -50,8 +52,14 @@ public class MyWindow : Gtk.ApplicationWindow {
       group_header_cb (group_header_button);
     });
 
+    search_entry = new Gtk.SearchEntry ();
+    header_bar.pack_end (search_entry);
+    search_entry.set_sensitive (false);
+    search_entry.search_changed.connect (() => {
+      tree_filter.refilter ();
+    });
+
     // BODY
-    var tree_view = new Gtk.TreeView ();
     list_store = new Gtk.ListStore (13, typeof (string),
                                         typeof (string),
                                         typeof (string),
@@ -65,6 +73,14 @@ public class MyWindow : Gtk.ApplicationWindow {
                                         typeof (string),
                                         typeof (string),
                                         typeof (string));
+
+
+    tree_filter = new Gtk.TreeModelFilter (list_store, null);
+    tree_filter.set_visible_func (filter_transactions);
+    var tree_view = new Gtk.TreeView.with_model (tree_filter);
+    tree_view.set_enable_search (false); // disable type ahead search
+    tree_view.set_search_column (-1); // disable CTRL+F search popup
+
     var cell = new Gtk.CellRendererText ();
     tree_view.insert_column_with_attributes (-1, "Name", cell, "text", Column.NAME);
     tree_view.insert_column_with_attributes (-1, "Instructed amount currency", cell, "text", Column.INSTRUCTED_AMOUNT_CURRENCY);
@@ -79,10 +95,10 @@ public class MyWindow : Gtk.ApplicationWindow {
     tree_view.insert_column_with_attributes (-1, "Code", cell, "text", Column.CODE);
     tree_view.insert_column_with_attributes (-1, "Issuer", cell, "text", Column.ISSUER);
     tree_view.insert_column_with_attributes (-1, "Reference", cell, "text", Column.REFERENCE);
-    tree_view.set_model (list_store);
 
     var scroll = new Gtk.ScrolledWindow (null, null);
     scroll.set_policy (Gtk.PolicyType.AUTOMATIC, Gtk.PolicyType.AUTOMATIC);
+
     scroll.add (tree_view);
     this.add (scroll);
   }
@@ -128,7 +144,9 @@ public class MyWindow : Gtk.ApplicationWindow {
 
     header_bar.subtitle = filename;
     list_store.clear ();
+    search_entry.delete_text (0, -1);
     group_header_button.set_sensitive (true);
+    search_entry.set_sensitive (true);
 
     Gtk.TreeIter iter;
     foreach (Transaction t in transactions) {
@@ -146,7 +164,40 @@ public class MyWindow : Gtk.ApplicationWindow {
                             Column.CODE, t.code,
                             Column.ISSUER, t.issuer,
                             Column.REFERENCE, t.reference);
+
     }
+  }
+
+  private bool filter_transactions(Gtk.TreeModel model, Gtk.TreeIter iter) {
+    var keywords = search_entry.get_text().down().split (" ");
+    if (keywords.length == 0) {
+      return true;
+    }
+
+    string[] row = new string[13];
+    model.get (iter, Column.NAME, out row[0],
+                     Column.INSTRUCTED_AMOUNT_CURRENCY, out row[1],
+                     Column.INSTRUCTED_AMOUNT, out row[2],
+                     Column.BIC, out row[3],
+                     Column.IBAN, out row[4],
+                     Column.UNSTRUCTURED, out row[5],
+                     Column.INSTRUCTION_IDENTIFICATION, out row[6],
+                     Column.END_TO_END_IDENTIFICATION, out row[7],
+                     Column.COUNTRY, out row[8],
+                     Column.ADDRESS_LINES, out row[9],
+                     Column.CODE, out row[10],
+                     Column.ISSUER, out row[11],
+                     Column.REFERENCE, out row[12],
+                     -1);
+
+    foreach (var cell in row) {
+      foreach (var keyword in keywords) {
+        if (cell != null && cell.down().contains (keyword)) {
+          return true;
+        }
+      }
+    }
+    return false;
   }
 
   private void add_label_to_grid (Gtk.Grid grid, int x_pos, string title, string value) {
