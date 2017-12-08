@@ -19,7 +19,7 @@ Install the dpendencies first, we use the Vala repository for a more recent Vala
 ```
 sudo add-apt-repository ppa:vala-team
 sudo apt update
-apt install valac libgtk-3-dev libxml2-dev
+sudo apt install valac libgtk-3-dev libxml2-dev cmake
 ```
 
 Now build and install CODAv:
