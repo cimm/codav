@@ -21,7 +21,9 @@ public class MyWindow : Gtk.ApplicationWindow {
   private Gtk.HeaderBar header_bar;
   private Gtk.Button group_header_button;
   private Gtk.SearchEntry search_entry;
+  private Gtk.ToggleButton search_button;
   private Gtk.TreeModelFilter tree_filter;
+  private Gtk.Revealer revealer;
   private GroupHeader group_header;
   private TransactionList transaction_list;
 
@@ -36,6 +38,8 @@ public class MyWindow : Gtk.ApplicationWindow {
     this.set_default_size (900, 500);
     this.window_position = Gtk.WindowPosition.CENTER;
 
+    Gtk.AccelGroup accel_group = new Gtk.AccelGroup();
+    this.add_accel_group (accel_group);
     this.add_action_entries (actions, this);
 
     // HEADER
@@ -47,19 +51,42 @@ public class MyWindow : Gtk.ApplicationWindow {
     group_header_button = new Gtk.MenuButton ();
     group_header_button.margin = 5;
     header_bar.pack_end (group_header_button);
-    group_header_button.set_sensitive (false);
+    group_header_button.set_no_show_all (true);
     group_header_button.clicked.connect (() => {
       group_header_cb (group_header_button);
     });
 
+    // BODY
+    search_button = new Gtk.ToggleButton ();
+    header_bar.pack_end (search_button);
+    var search_icon = new Gtk.Image.from_icon_name ("system-search-symbolic", Gtk.IconSize.BUTTON);
+    search_button.set_margin_top (5);
+    search_button.set_margin_bottom (5);
+    search_button.set_image (search_icon);
+    search_button.set_no_show_all (true);
+    search_button.add_accelerator ("activate",
+                                   accel_group,
+                                   'F',
+                                   Gdk.ModifierType.CONTROL_MASK,
+                                   Gtk.AccelFlags.VISIBLE);
+
     search_entry = new Gtk.SearchEntry ();
-    header_bar.pack_end (search_entry);
-    search_entry.set_sensitive (false);
+    search_entry.set_margin_top (5);
+    search_entry.set_margin_bottom (5);
+    search_entry.set_size_request (300, -1);
     search_entry.search_changed.connect (() => {
       tree_filter.refilter ();
     });
 
-    // BODY
+    search_button.toggled.connect (() => {
+      search_cb ();
+    });
+
+    revealer = new Gtk.Revealer ();
+    revealer.halign = Gtk.Align.CENTER;
+    revealer.add (search_entry);
+    revealer.set_reveal_child (false);
+
     list_store = new Gtk.ListStore (13, typeof (string),
                                         typeof (string),
                                         typeof (string),
@@ -98,9 +125,12 @@ public class MyWindow : Gtk.ApplicationWindow {
 
     var scroll = new Gtk.ScrolledWindow (null, null);
     scroll.set_policy (Gtk.PolicyType.AUTOMATIC, Gtk.PolicyType.AUTOMATIC);
-
     scroll.add (tree_view);
-    this.add (scroll);
+
+    var box = new Gtk.Box (Gtk.Orientation.VERTICAL, 0);
+    box.pack_start (revealer, false, true);
+    box.pack_start (scroll);
+    this.add (box);
   }
 
   private void group_header_cb (Gtk.Button button) {
@@ -124,6 +154,16 @@ public class MyWindow : Gtk.ApplicationWindow {
     group_header_popover.show_all ();
   }
 
+  private void search_cb () {
+    if (!revealer.get_reveal_child ()) {
+       revealer.set_reveal_child (true);
+       search_entry.grab_focus ();
+    } else {
+       revealer.set_reveal_child (false);
+       search_entry.set_text ("");
+    }
+  }
+
   private void open_cb (SimpleAction action, Variant? parameter) {
     var file_chooser = new Gtk.FileChooserDialog ("Select CODA XML file", this,
                                                  Gtk.FileChooserAction.OPEN,
@@ -144,9 +184,10 @@ public class MyWindow : Gtk.ApplicationWindow {
 
     header_bar.subtitle = filename;
     list_store.clear ();
-    search_entry.delete_text (0, -1);
+    search_entry.set_text ("");
+    group_header_button.set_visible (true);
     group_header_button.set_sensitive (true);
-    search_entry.set_sensitive (true);
+    search_button.set_visible (true);
 
     Gtk.TreeIter iter;
     foreach (Transaction t in transactions) {
