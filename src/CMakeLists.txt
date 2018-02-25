@@ -12,7 +12,7 @@ link_directories (${DEPS_LIBRARY_DIRS})
 find_package (Vala REQUIRED)
 
 include (ValaVersion)
-ensure_vala_version ("0.34.0" MINIMUM)
+ensure_vala_version ("0.30.0" MINIMUM)
 
 include (ValaPrecompile)
 vala_precompile (VALA_C ${CMAKE_PROJECT_NAME}

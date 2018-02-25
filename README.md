@@ -49,3 +49,17 @@ cmake -DCMAKE_INSTALL_PREFIX=/usr ..
 make
 sudo make install
 ```
+
+## Development
+
+Some useful notes for the development of this application, not needed to actually run it.
+
+### Snapcraft
+
+You'll need [snapcraft](https://snapcraft.io/) to build the snap yourself, the `snapcraft.yaml` file contains the snap build instructions and can be found in the `/snap` directory. Run `snapcraft` from the project's root directory of the project, not from within the `/snap` directory, it will download the necessary dependencies and spit out the snap package. Build on 16.04 since 17.10 seems to have some problems.
+
+You can try out the local snap with:
+
+```bash
+sudo snap install codav_0.1_*.snap --devmode
+```

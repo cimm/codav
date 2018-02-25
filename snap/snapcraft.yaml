@@ -9,10 +9,21 @@ confinement: devmode # use 'strict' once you have the right plugs and slots
 apps:
   codav:
     command: desktop-launch codav
-    plugs: [x11, unity7, home, gsettings]
+    plugs:
+      - home
+      - x11
+      - unity7
+      - gsettings
 
 parts:
   codav:
     source: .
     plugin: cmake
-    after: [desktop-gtk3]
+    after:
+      - desktop-gtk3
+    build-packages:
+      - valac
+      - libxml2-dev
+    stage-packages:
+      - libxml2
+      - libcanberra-gtk3-module
