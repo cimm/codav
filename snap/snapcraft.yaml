@@ -9,6 +9,7 @@ confinement: devmode # use 'strict' once you have the right plugs and slots
 apps:
   codav:
     command: desktop-launch codav
+    desktop: share/applications/codav.desktop
     plugs:
       - home
       - x11
