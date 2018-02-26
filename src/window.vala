@@ -169,7 +169,7 @@ public class MyWindow : Gtk.ApplicationWindow {
                                                  Gtk.FileChooserAction.OPEN,
                                                  "_Cancel", Gtk.ResponseType.CANCEL,
                                                  "_Open", Gtk.ResponseType.ACCEPT);
-    file_chooser.local_only = false;
+    file_chooser.local_only = true; // so we don't need to ask network permissions in snapcraft.yml
     file_chooser.set_modal (true);
     if (file_chooser.run () == Gtk.ResponseType.ACCEPT) {
       open_file (file_chooser.get_filename ());
