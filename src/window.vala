@@ -171,6 +171,12 @@ public class MyWindow : Gtk.ApplicationWindow {
                                                  "_Open", Gtk.ResponseType.ACCEPT);
     file_chooser.local_only = true; // so we don't need to ask network permissions in snapcraft.yml
     file_chooser.set_modal (true);
+
+    Gtk.FileFilter filter_xml = new Gtk.FileFilter ();
+    filter_xml.set_filter_name ("XML");
+    filter_xml.add_pattern ("*.xml");
+    file_chooser.add_filter (filter_xml);
+
     if (file_chooser.run () == Gtk.ResponseType.ACCEPT) {
       open_file (file_chooser.get_filename ());
     }
