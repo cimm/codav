@@ -4,7 +4,7 @@ summary: Reads CODA SEPA payment XML files
 description: |
     An "XML message for Credit Transfer Initiation" (ISO 20022 XML) file encodes European credit transfers (SEPA) in a standard way. It's often refered to as a "CODA (Coded Statement of Account) file". It requests the movement of funds from the debtor account to a creditor. CODAv is a desktop application that understands these electronic messages and serves as a viewer to verify the contents of these files. CODAv follows the Belgian implementation guidelines as defined by the Belgian sector federation Febelfin.
 grade: devel # must be 'stable' to release into candidate/stable channels
-confinement: devmode # use 'strict' once you have the right plugs and slots
+confinement: strict
 
 apps:
   codav:
