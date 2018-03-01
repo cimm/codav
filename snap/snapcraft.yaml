@@ -5,6 +5,9 @@ description: |
     An "XML message for Credit Transfer Initiation" (ISO 20022 XML) file encodes European credit transfers (SEPA) in a standard way. It's often refered to as a "CODA (Coded Statement of Account) file". It requests the movement of funds from the debtor account to a creditor. CODAv is a desktop application that understands these electronic messages and serves as a viewer to verify the contents of these files. CODAv follows the Belgian implementation guidelines as defined by the Belgian sector federation Febelfin.
 grade: devel # must be 'stable' to release into candidate/stable channels
 confinement: strict
+architectures:
+  - i386
+  - amd64
 
 apps:
   codav:
@@ -14,13 +17,25 @@ apps:
       - home
       - x11
       - unity7
-      - gsettings
+      - desktop
+      - wayland
 
 parts:
+  gnome-3-26: # needed for Wayland
+    plugin: nil
+    prepare: |
+      apt-get install software-properties-common -y
+      add-apt-repository -y ppa:ubuntu-desktop/gnome-3-26
+      apt-get update
+      apt-get upgrade -yqq
+  desktop-gtk3:
+    after:
+      - gnome-3-26
   codav:
     source: .
     plugin: cmake
     after:
+      - gnome-3-26
       - desktop-gtk3
     build-packages:
       - valac
