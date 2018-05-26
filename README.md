@@ -10,7 +10,7 @@ The current itteration shows all fields from the CODA XML in a table view like o
 
 ## Install
 
-CODAv is tested on Ubuntu 16.04, 17.10, and macOS Sierra. It's written in Vala and depends on GTK 3 and libxml 2. [Download](https://github.com/cimm/codav/archive/master.zip) or [clone](https://github.com/cimm/codav.git) the repository and run the following from within its root directory.
+CODAv is tested on Ubuntu 16.04, 17.10, 18.04, and macOS Sierra. It's written in Vala and depends on GTK 3 and libxml 2. [Download](https://github.com/cimm/codav/archive/master.zip) or [clone](https://github.com/cimm/codav.git) the repository and run the following from within its root directory.
 
 ### Linux
 
