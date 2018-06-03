@@ -39,4 +39,5 @@ add_executable (${CMAKE_PROJECT_NAME} ${VALA_C} ${GLIB_RESOURCES})
 
 install (FILES ${CMAKE_SOURCE_DIR}/data/codav.desktop DESTINATION share/applications)
 install (FILES ${CMAKE_SOURCE_DIR}/data/codav.appdata.xml DESTINATION share/codav)
+install (FILES ${CMAKE_SOURCE_DIR}/data/codav.png DESTINATION share/pixmaps)
 install (TARGETS ${CMAKE_PROJECT_NAME} DESTINATION bin)

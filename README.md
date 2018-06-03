@@ -17,8 +17,7 @@ CODAv is tested on Ubuntu 16.04, 17.10, 18.04, and macOS Sierra. It's written in
 Install the dpendencies first, we use the Vala repository for a more recent Vala version.
 
 ```
-sudo add-apt-repository ppa:vala-team
-sudo apt update
+sudo add-apt-repository -yu ppa:vala-team
 sudo apt install valac libgtk-3-dev libxml2-dev cmake
 ```
 
