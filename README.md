@@ -55,10 +55,10 @@ Some useful notes for the development of this application, not needed to actuall
 
 ### Snapcraft
 
-You'll need [snapcraft](https://snapcraft.io/) to build the snap yourself, the `snapcraft.yaml` file contains the snap build instructions and can be found in the `/snap` directory. Run `snapcraft` from the project's root directory of the project, not from within the `/snap` directory, it will download the necessary dependencies and spit out the snap package. Build on 16.04 since 17.10 seems to have some problems.
+You'll need [snapcraft](https://snapcraft.io/) to build the snap yourself, the `snapcraft.yaml` file contains the snap build instructions and can be found in the `/snap` directory. Run `snapcraft cleanbuild` from the project's root directory of the project, not from within the `/snap` directory, it will download the necessary dependencies and spit out the snap package. You'll need [LXD](https://docs.snapcraft.io/build-snaps/build-on-lxd-docker) to build the snap with cleanbuild (it uses a container).
 
 You can try out the local snap with:
 
 ```bash
-sudo snap install codav_0.1_*.snap --devmode
+snap install codav_0.1_*.snap --dangerous
 ```
